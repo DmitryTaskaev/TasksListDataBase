@@ -25,7 +25,7 @@ data class Tasks (
     @ColumnInfo(name = BaseColumns._ID)
     val id: Int,
     @ColumnInfo(index = true)
-    var preorityId: String,
+    var preorityId: Boolean,
     var nameTask: String,
     var creatTask: String,
     var text: String,

@@ -14,7 +14,7 @@ interface TasksDAO {
     */
 
     @Query("SELECT * FROM $PRIOR_TABLE")
-    fun getAllPreority(): LiveData<List<Priority>>
+    fun getAllPreority(): LiveData<MutableList<Priority>>
 
     //Добавление приоритета
     @Insert
@@ -34,7 +34,10 @@ interface TasksDAO {
     */
 
     @Query("SELECT * FROM $TASKS_TABLE")
-    fun getAllTasks(): LiveData<List<Tasks>>
+    fun getAllTasks(): LiveData<MutableList<Tasks>>
+
+    @Query("SELECT * FROM $TASKS_TABLE WHERE _id=:id")
+    fun getTasks(id: Int): LiveData<MutableList<Tasks>>
 
     //Добавление задачи
     @Insert

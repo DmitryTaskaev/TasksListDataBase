@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -18,6 +19,7 @@ import androidx.room.RoomDatabase
 import com.bignerdranch.android.lab11json.data.DATABASE_NAME
 import com.bignerdranch.android.lab11json.data.TasksBD
 import com.bignerdranch.android.lab11json.data.models.Priority
+import com.bignerdranch.android.lab11json.data.models.Tasks
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.concurrent.Executors
@@ -26,45 +28,23 @@ class TaskInfo : AppCompatActivity() {
 
     private lateinit var addTask : ImageButton
     private lateinit var listTask: MutableList<TaskClass?>
-
-    private val APP = "prefs"
-    private lateinit var prefs: SharedPreferences
-
     private var index : Int = -1
+    private var yesorno : Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_info)
         listTask = mutableListOf()
+        DBtoList()
         addTask = findViewById(R.id.addTaskBtn)
-
-        prefs = getSharedPreferences(APP, Context.MODE_PRIVATE)
         updateInformation()
-
-        var db: TasksBD = Room.databaseBuilder(this, TasksBD::class.java, DATABASE_NAME).build()
-        val TaskDAO = db.TasksDAO()
-        val exec = Executors.newSingleThreadExecutor()
-
-        exec.execute{
-
-        }
-
 
         //Переход в окно добавления
         addTask.setOnClickListener {
             val reDir = Intent(this, MainActivity::class.java)
             startActivity(reDir)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        val JSON = Gson().toJson(listTask).toString()
-        val edit = prefs.edit()
-        edit.putString("JSON_STRING", JSON)
-        edit.apply()
-
     }
     override fun onBackPressed() {
         AlertDialog.Builder(this).apply {
@@ -79,17 +59,27 @@ class TaskInfo : AppCompatActivity() {
             setCancelable(true)
         }.create().show()
     }
-
     override fun onResume() {
         super.onResume()
+        //DBtoList()
         updateInformation()
     }
-    fun updateInformation(){
-        if(prefs.contains("JSON_STRING")){
-            val json:String? = prefs.getString("JSON_STRING", "")
-            listTask = Gson().fromJson<MutableList<TaskClass>>(json, object: TypeToken<MutableList<TaskClass>>() {}.type)
-                .toMutableList()
+
+    fun DBtoList(){
+        if(yesorno == 0){
+            var db: TasksBD = Room.databaseBuilder(this, TasksBD::class.java, DATABASE_NAME).build()
+            val TaskDAO = db.TasksDAO()
+            val Taskss = TaskDAO.getAllTasks()
+            Taskss.observe(this, androidx.lifecycle.Observer {
+                it.forEach {
+                    listTask.add(TaskClass(it.nameTask,it.preorityId,it.creatTask,it.text,it.dateTask))
+                }
+            })
+            yesorno = 1
         }
+    }
+    fun updateInformation(){
+        Log.d("DBSSADD","updInfo выполнен")
         val rv = findViewById<RecyclerView>(R.id.TaskLisrRv)
         val adapter = TaskRVAdapter(this, listTask)
         val rvListener = object : TaskRVAdapter.ItemClickListener{
@@ -104,4 +94,5 @@ class TaskInfo : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
     }
+
 }

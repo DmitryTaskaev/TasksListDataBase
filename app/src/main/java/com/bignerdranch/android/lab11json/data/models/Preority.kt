@@ -20,5 +20,5 @@ data class Priority (
     @ColumnInfo(name = BaseColumns._ID)
     val id: Int,
     @ColumnInfo(index = true)
-    var preority: String
+    var preority: Boolean
 )
