@@ -1,9 +1,12 @@
 package com.bignerdranch.android.lab11json
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.security.AccessControlContext
@@ -24,6 +27,10 @@ class TaskRVAdapter(context: Context?, val data: MutableList<TaskClass?>) : Recy
         holder.textTextView.text = item?._text
         holder.cratTextView.text = item?.names
         holder.dateTextView.text = item?.date
+        //if(item?.preority == true){
+            //holder.Liner.setBackgroundColor(Color.RED)
+            //holder.nameTextView.setTextColor(Color.RED)
+        //}
     }
 
     override fun getItemCount(): Int = data.size
@@ -41,6 +48,7 @@ class TaskRVAdapter(context: Context?, val data: MutableList<TaskClass?>) : Recy
         var textTextView : TextView = itemView.findViewById(R.id.taskText)
         var cratTextView : TextView = itemView.findViewById(R.id.taskCreate)
         var dateTextView : TextView = itemView.findViewById(R.id.taskDate)
+        var Liner : LinearLayout = itemView.findViewById(R.id.LinerItem)
 
         init {
             itemView.setOnClickListener(this)

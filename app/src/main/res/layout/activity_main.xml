@@ -12,27 +12,29 @@
         android:id="@+id/nameTask"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/white"
         android:ems="10"
         android:hint="@string/nameTask"
         android:inputType="textPersonName"
-        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
         android:singleLine="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="TextContrastCheck,TouchTargetSizeCheck"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/textTask"
         android:layout_width="250dp"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:autofillHints=""
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:ems="10"
@@ -40,11 +42,9 @@
         android:inputType="textPersonName"
         android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namesTask"
-        tools:ignore="TextContrastCheck"
-        android:autofillHints="" />
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/buttonTask"
@@ -62,7 +62,7 @@
     <EditText
         android:id="@+id/namesTask"
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/white"
@@ -71,23 +71,22 @@
         android:foregroundTint="@color/Colors_Main"
         android:hint="@string/namesTask"
         android:inputType="textPersonName"
-        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTask"
-        tools:ignore="TextContrastCheck" />
+        tools:ignore="TextContrastCheck,TouchTargetSizeCheck"
+        android:autofillHints="" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="20dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTask" />
+        app:layout_constraintTop_toBottomOf="@+id/prioruty" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -121,8 +120,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back_mmini"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            android:contentDescription="TODO" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <CheckBox
+        android:id="@+id/prioruty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/priorityTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTask" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

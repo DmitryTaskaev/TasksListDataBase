@@ -31,6 +31,8 @@ class TaskInfo : AppCompatActivity() {
     private var index : Int = -1
     private var yesorno : Int = 0
 
+    private var kol_preority : Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,9 @@ class TaskInfo : AppCompatActivity() {
         DBtoList()
         addTask = findViewById(R.id.addTaskBtn)
         updateInformation()
+
+
+
 
         //Переход в окно добавления
         addTask.setOnClickListener {

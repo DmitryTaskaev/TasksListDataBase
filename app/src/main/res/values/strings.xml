@@ -8,6 +8,7 @@
     <string name="myTask">Мои задачи</string>
     <string name="namesTask">Исполнитель задачи</string>
     <string name="namesAddTask">Добавление задачи</string>
+    <string name="priorityTask">Важная задача</string>
     <string name="dialogTitle">Delete File</string>
     <string name="dialogMessage">Deleting file may be harm your system</string>
 </resources>

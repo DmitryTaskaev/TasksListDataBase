@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnTask: Button
     private lateinit var btnTaskInfo: ImageButton
     private lateinit var tvHead: TextView
+    private lateinit var checkTask : CheckBox
 
     private var date : String? = null
 
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         dateTask = findViewById(R.id.calendarView)
         btnTaskInfo = findViewById(R.id.backTaskInfo)
         tvHead = findViewById(R.id.textView3)
+        checkTask = findViewById(R.id.prioruty)
 
         var index = intent.getIntExtra("index",-1)
 
@@ -63,6 +65,11 @@ class MainActivity : AppCompatActivity() {
                     nameTask.setText(it.nameTask)
                     namesTask.setText(it.creatTask)
                     textTask.setText(it.text)
+                    if(it.preorityId){
+                        checkTask.isChecked = true
+                    } else {
+                        checkTask.isChecked = false
+                    }
                     val date = it.dateTask.split(".")
                     cl.set(date?.get(2)!!.toInt(),date[1].toInt()-1,date[0].toInt())
                     dateTask.date = cl.timeInMillis
@@ -77,18 +84,32 @@ class MainActivity : AppCompatActivity() {
                 var db: TasksBD = Room.databaseBuilder(this, TasksBD::class.java, DATABASE_NAME).build()
                 val TaskDAO = db.TasksDAO()
                 val exec = Executors.newSingleThreadExecutor()
-                exec.execute{
-                    TaskDAO.addTasks(Tasks(0,true,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                if(checkTask.isChecked){
+                    exec.execute{
+                        TaskDAO.addTasks(Tasks(0,true,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                    }
+                } else {
+                    exec.execute{
+                        TaskDAO.addTasks(Tasks(0,false,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                    }
                 }
+
             }
             else
             {
                 var db: TasksBD = Room.databaseBuilder(this, TasksBD::class.java, DATABASE_NAME).build()
                 val TaskDAO = db.TasksDAO()
                 val exec = Executors.newSingleThreadExecutor()
-                exec.execute{
-                    TaskDAO.saveTasks(Tasks(index+1,false,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                if(checkTask.isChecked){
+                    exec.execute{
+                        TaskDAO.saveTasks(Tasks(index+1,true,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                    }
+                } else {
+                    exec.execute{
+                        TaskDAO.saveTasks(Tasks(index+1,false,nameTask.text.toString(),namesTask.text.toString(),textTask.text.toString(),date.toString()))
+                    }
                 }
+
 
             }
             super.onBackPressed()
